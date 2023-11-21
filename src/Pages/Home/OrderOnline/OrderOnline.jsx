@@ -12,7 +12,9 @@ import slide5 from '../../../assets/home/slide5.jpg'
 
 
 
+
 const OrderOnline = () => {
+
     return (
         <div className="my-57">
             <Heading subHeading={'-From 11:00am to 10:00pm'}
