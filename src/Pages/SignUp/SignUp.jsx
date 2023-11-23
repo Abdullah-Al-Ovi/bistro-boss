@@ -3,11 +3,13 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authContext } from "../../Components/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
     const { createUser, updateUser} = useContext(authContext)
     const [err, setErr] = useState('')
     const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
     const {
         register,
         handleSubmit,
@@ -17,25 +19,41 @@ const SignUp = () => {
 
     const onSubmit = (data) => {
         console.log(data)
+        const userInfo = {
+            name: data.name,
+            email : data.email,
+            photo : data.link 
+        }
+        console.log(userInfo);
+        
         createUser(data.email,data.password)
         .then(()=>{
            
            updateUser(data.name,data.link)
             .then(()=>{
+               
                 reset()
+                axiosPublic.post('/users',userInfo)
+                .then(res=>{
+                    console.log(res.data);
+                    if(res.data.insertedId){
+                        Swal.fire({
+                            position: "top",
+                            icon: "success",
+                            title: "Sign up Successfully!",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                        //   navigate('/')
+                    }
+                })
+
             })
             .catch(()=>{
                 
             })
             
-            Swal.fire({
-                position: "top",
-                icon: "success",
-                title: "Sign up Successfully!",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              navigate('/')
+            
            
         })
         .catch(error=>{

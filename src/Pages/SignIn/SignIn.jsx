@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { authContext } from '../../Components/AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const SignIn = () => {
     const { googleSignIn, signInUser } = useContext(authContext)
@@ -11,6 +12,7 @@ const SignIn = () => {
     const [disable,setDisable] = useState(true)
     const location = useLocation()
     const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -46,9 +48,17 @@ const SignIn = () => {
     const handleGoogleSignIn = () => {
         setErr('')
         googleSignIn()
-            .then(() => {
-                navigate(location?.state ? location.state : '/')
-
+            .then((result) => {
+                console.log(result);
+                const userInfo = {
+                    name: result?.user?.displayName,
+                    email: result?.user?.email,
+                    photo : result?.user?.photoURL
+                }
+                axiosPublic.post('/users',userInfo)
+                .then(res=>{
+                    console.log(res.data);
+                })
                 Swal.fire({
                     position: "top",
                     icon: "success",
@@ -56,6 +66,7 @@ const SignIn = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(location?.state ? location.state : '/')
             })
             .catch(error => {
                 setErr(error.message)
