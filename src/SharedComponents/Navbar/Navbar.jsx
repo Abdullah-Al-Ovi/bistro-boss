@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { NavLink, useNavigate} from "react-router-dom";
 import { authContext } from "../../Components/AuthProvider/AuthProvider";
+import useCart from "../../Hooks/useCart";
 
 
 const Navbar = () => {
     const {user,logOut} = useContext(authContext)
   const navigate = useNavigate()
+  const [cart] = useCart()
+  console.log(cart);
  
     const route = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -15,6 +18,7 @@ const Navbar = () => {
         <li><NavLink to='/our-menu'>Our menu</NavLink></li>
         <li><NavLink to='/our-shop'>Our shop</NavLink></li>
         <li><NavLink to='/order-food/Salad'>Order food</NavLink></li>
+        <li><NavLink to='/dashboard/cart'><i className="fa-solid fa-cart-shopping "></i> <div className="badge badge-secondary">{cart.length}</div></NavLink></li>
         
     </>
      const handleSignOut=()=>{

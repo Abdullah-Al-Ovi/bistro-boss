@@ -4,8 +4,9 @@ import order from '../../assets/shop/banner2.jpg'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import useMenu from '../../Hooks/useMenu';
-import CategoryMenu from '../../SharedComponents/CategoryMenu/CategoryMenu';
+
 import { useParams } from 'react-router-dom';
+import Foodcards from './Foodcards/Foodcards';
 
 const OrderFood = () => {
     const {category} = useParams()
@@ -44,16 +45,16 @@ const OrderFood = () => {
                 </TabList>
                 </div>
                 <TabPanel>
-                    <CategoryMenu cateMenu={saladMenu}></CategoryMenu>
+                    <Foodcards cateMenu={saladMenu}></Foodcards>
                 </TabPanel>
                 <TabPanel>
-                    <CategoryMenu cateMenu={pizzaMenu}></CategoryMenu>
+                    <Foodcards cateMenu={pizzaMenu}></Foodcards>
                 </TabPanel>
                 <TabPanel>
-                <CategoryMenu cateMenu={soupMenu}></CategoryMenu>
+                <Foodcards cateMenu={soupMenu}></Foodcards>
                 </TabPanel>
                 <TabPanel>
-                <CategoryMenu cateMenu={dessertMenu}></CategoryMenu>
+                <Foodcards cateMenu={dessertMenu}></Foodcards>
                 </TabPanel>
             </Tabs>
         </div>

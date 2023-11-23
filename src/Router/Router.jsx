@@ -5,6 +5,8 @@ import OurMenu from "../Pages/OurMenu/OurMenu";
 import OrderFood from "../Pages/OrderFood/OrderFood";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import Mycart from "../Pages/Dashboard/Mycart/Mycart";
 
 
 const Router = createBrowserRouter([
@@ -31,6 +33,16 @@ const Router = createBrowserRouter([
             {
                 path:'/sign-up',
                 element:<SignUp></SignUp>
+            }
+        ]
+    },
+    {
+        path:'/dashboard',
+        element:<Dashboard></Dashboard>,
+        children:[
+            {
+                path:'cart',
+                element:<Mycart></Mycart>
             }
         ]
     }
